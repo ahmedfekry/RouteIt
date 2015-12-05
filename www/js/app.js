@@ -27,40 +27,8 @@ angular.module('starter', ['ionic'])
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var map = new google.maps.Map(document.getElementById('googleMaps'),mapProp );
-      // alert("2");
-
-      // // To Add a Marker
-      // var marker=new google.maps.Marker({
-      //     position:myCenter,
-          
-      //     animation:google.maps.Animation.BOUNCE
-      //   });
-      // marker.setMap(map);
-      // // to add info window on the marker
-      // var infowindow = new google.maps.InfoWindow({
-      //     content:"Your Location"
-      //   });
-      // infowindow.open(map,marker);
-      // var z = 9;
-      // google.maps.event.addListener(marker,'click',function() {
-      //     map.setZoom(z+1);
-      //     map.setCenter(marker.getPosition());
-      //   });
-
-      // google.maps.event.addListener(map,'center_changed',function() {
-      //     window.setTimeout(function() {
-      //     map.panTo(marker.getPosition());
-      //     },3000);
-      // });
-      $scope.map2 = map;
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-    
-    $scope.getMe = function() {
-      if (!$scope.map2) {
-        return;
-      };
       
+      $scope.map2 = map;
       if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
           $scope.$apply(function() {
@@ -87,5 +55,7 @@ angular.module('starter', ['ionic'])
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, $scope.map2.getCenter());
   }
-    };
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
 })
