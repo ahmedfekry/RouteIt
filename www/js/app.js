@@ -17,3 +17,75 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+.controller("MapController",function ($scope,$ionicLoading) {
+    var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+    function initialize () {
+      // alert("ini");
+      var mapProp ={
+        center: myCenter,
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById('googleMaps'),mapProp );
+      // alert("2");
+
+      // // To Add a Marker
+      // var marker=new google.maps.Marker({
+      //     position:myCenter,
+          
+      //     animation:google.maps.Animation.BOUNCE
+      //   });
+      // marker.setMap(map);
+      // // to add info window on the marker
+      // var infowindow = new google.maps.InfoWindow({
+      //     content:"Your Location"
+      //   });
+      // infowindow.open(map,marker);
+      // var z = 9;
+      // google.maps.event.addListener(marker,'click',function() {
+      //     map.setZoom(z+1);
+      //     map.setCenter(marker.getPosition());
+      //   });
+
+      // google.maps.event.addListener(map,'center_changed',function() {
+      //     window.setTimeout(function() {
+      //     map.panTo(marker.getPosition());
+      //     },3000);
+      // });
+      $scope.map2 = map;
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+    $scope.getMe = function() {
+      if (!$scope.map2) {
+        return;
+      };
+      
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+          $scope.$apply(function() {
+            var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var marker=new google.maps.Marker({
+            position:pos,
+            animation:google.maps.Animation.BOUNCE
+          });
+          marker.setMap($scope.map2);
+          
+          var infowindow = new google.maps.InfoWindow({
+               content:"Your Location"
+          });
+          infowindow.open($scope.map2,marker);
+          $scope.map2.setCenter(pos);
+          });
+    }, function() {
+      handleLocationError(true, infoWindow, $scope.map2.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, $scope.map2.getCenter());
+  }
+    };
+})
