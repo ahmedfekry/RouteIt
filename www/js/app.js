@@ -36,6 +36,7 @@ angular.module('starter', ['ionic'])
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
+          $scope.gloPos = pos;
           var marker=new google.maps.Marker({
             position:pos,
             animation:google.maps.Animation.BOUNCE
@@ -48,14 +49,36 @@ angular.module('starter', ['ionic'])
           infowindow.open($scope.map2,marker);
           $scope.map2.setCenter(pos);
           });
-    }, function() {
-      handleLocationError(true, infoWindow, $scope.map2.getCenter());
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infoWindow, $scope.map2.getCenter());
-  }
+        }, function() {
+          handleLocationError(true, infoWindow, $scope.map2.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, $scope.map2.getCenter());
+      }
     }
     google.maps.event.addDomListener(window, 'load', initialize);
-    
+    $scope.routeIt = function () {
+      // body...
+      var directionService = new google.maps.DirectionsService;
+      var directionDisplay = new google.maps.DirectionsRenderer;
+      directionDisplay.setMap($scope.map2)
+      calculateAndDisplayRoute(directionService, directionDisplay);
+    }
+
+    function  calculateAndDisplayRoute (directionsService, directionsDisplay) {
+      // body...
+      directionsService.route({
+        origin: $scope.gloPos.lat+","+$scope.gloPos.lng,
+        destination: "30.061908,31.242866",
+        travelMode: google.maps.TravelMode.WALKING,
+        // alternatives: true
+      },function (response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
 })
