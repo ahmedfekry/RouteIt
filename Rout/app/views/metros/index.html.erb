@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Metros</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Long</th>
+      <th>Lat</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @metros.each do |metro| %>
+      <tr>
+        <td><%= metro.name %></td>
+        <td><%= metro.long %></td>
+        <td><%= metro.lat %></td>
+        <td><%= link_to 'Show', metro %></td>
+        <td><%= link_to 'Edit', edit_metro_path(metro) %></td>
+        <td><%= link_to 'Destroy', metro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Metro', new_metro_path %>

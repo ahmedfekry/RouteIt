@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @metro.name %>
+</p>
+
+<p>
+  <strong>Long:</strong>
+  <%= @metro.long %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @metro.lat %>
+</p>
+
+<%= link_to 'Edit', edit_metro_path(@metro) %> |
+<%= link_to 'Back', metros_path %>
